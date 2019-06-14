@@ -1,0 +1,43 @@
+$colors: #fff, #aaa, #bbb, #ccc, #ddd,#eee;
+$size: 20px;
+
+@mixin boom($name) {
+	@keyframes #{$name} {
+    from {
+      width: $size;
+      height: $size;
+      transform: translate(50%, 50%);
+    }
+    to {
+      width: 0;
+      height: 0;
+      $randomX: (random(200) - 100) + px;
+      $randomY: (random(200) - 100) + px;
+      transform: translate(#{$randomX}, #{$randomY});
+    }
+	}
+}
+
+//Create random booms
+@for $i from 1 to 20 {
+	@include boom("boom" + $i);
+}
+
+@for $i from 1 to 20 {
+	.boom#{$i} {
+    background-color: nth($colors, $i % length($colors) + 1);
+		$duration: 1200 + random(400);
+    animation: boom#{$i} cubic-bezier(0.19, 1, 0.22, 1) #{$duration}ms;
+	}
+}
+
+.boom {
+  position: absolute;
+  width: 0; 
+  height: 0;
+  border-radius: 50%;
+  left: 50%;
+  top: 50%;
+  margin-top: -$size / 2; // hal
+  margin-left: -$size / 2;
+}

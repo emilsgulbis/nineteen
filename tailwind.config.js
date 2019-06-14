@@ -2,17 +2,27 @@
 module.exports = {
   theme: {
     extend: {
+      colors: {
+        blue: {
+          100: '#eceff7',
+          300: '#4b4e60',
+          500: '#2f3244',
+          700: '#252839',
+          900: '#141824'
+        }
+      },
+
       width: {
-        '36px': '36px',
+        '50px': '50px',
         '450px': '450px'
       },
 
       height: {
-        '36px': '36px',
+        '50px': '50px',
       },
 
       spacing: {
-        '7px': '7px'
+        'sm': '4px'
       }
     }
   },
