@@ -1,39 +1,45 @@
 <template>
-  <div>
-    <div class="p-sm">
-      <game-progress :value="progress" />
+  <div class="flex flex-1">
+    <div class="flex-1">
+      <div class="w-450px mx-auto">
+        <div class="p-sm">
+          <game-progress :value="progress" />
+        </div>
+
+        <div class="flex flex-wrap">
+          <game-item
+            v-for="item in items"
+            :key="item.index"
+            :item="item"
+            @select="select(item)"
+          />
+        </div>
+
+        <div class="p-sm">
+          <button
+            class="bg-blue-300 text-blue-700 font-bold px-4 py-2 w-full rounded-full focus:outline-none uppercase"
+            @click.prevent="duplicate()"
+          >
+            Pievienot
+          </button>
+        </div>
+      </div>
     </div>
 
-    <div class="flex flex-wrap">
-      <game-item
-        v-for="item in items"
-        :key="item.index"
-        :item="item"
-        @select="select(item)"
-      />
-    </div>
-
-    <div class="p-sm">
-      <button
-        class="bg-blue-300 text-blue-700 font-bold px-4 py-2 w-full rounded-full focus:outline-none uppercase"
-        @click.prevent="duplicate()"
-      >
-        Pievienot
-      </button>
-    </div>
-
-    <button @click.prevent="stepBack()">back</button>
+    <game-menu @back="stepBack" @hint="showHint" @new="resetNumbers" />
   </div>
 </template>
 
 <script>
 import GameItem from './Item'
+import GameMenu from './Menu'
 import GameProgress from './Progress'
 import { patterns } from '~/utils/variables'
 
 export default {
   components: {
     GameItem,
+    GameMenu,
     GameProgress
   },
 
@@ -75,10 +81,15 @@ export default {
   },
 
   created() {
-    this.addNumbers(patterns.default.split(','))
+    this.resetNumbers()
   },
 
   methods: {
+    resetNumbers() {
+      this.items = []
+      this.addNumbers(patterns.default.split(','))
+    },
+
     addNumbers(numbers) {
       numbers.forEach(number => {
         this.items.push({
@@ -171,6 +182,10 @@ export default {
           this.items.splice(step.index)
         }
       }
+    },
+
+    showHint() {
+      return 1
     }
   }
 }

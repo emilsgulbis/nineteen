@@ -8,13 +8,31 @@ module.exports = {
           300: '#4b4e60',
           500: '#2f3244',
           700: '#252839',
-          900: '#141824'
+          900: '#141824',
+          default: '1bb3d8'
+        },
+
+        green: {
+          100: '#82b9aa',
+          200: '#70b4a1',
+          default: '#00cd2b'
+        },
+
+        orange: {
+          default: '#ffb444',
+          500: '#ffac30'
+        },
+
+        salmon: {
+          default: '#ff6955',
+          500: '#ff5f4a'
         }
       },
 
       width: {
         '50px': '50px',
-        '450px': '450px'
+        '450px': '450px',
+        '200px': '200px'
       },
 
       height: {
