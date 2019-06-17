@@ -41,7 +41,7 @@ export default {
   },
 
   fire: {
-    useOnly: ['realtimeDb'],
+    useOnly: ['realtimeDb', 'auth'],
     config: {
       development: {
         apiKey: "AIzaSyBbMpTZysW9v7FZq3j32NkRugfP4va7Ngk",
