@@ -26,7 +26,12 @@
       </div>
     </div>
 
-    <game-menu @back="stepBack" @hint="showHint" @new="resetNumbers" />
+    <game-menu
+      :hints="0"
+      @back="stepBack"
+      @hint="showHint"
+      @new="resetNumbers"
+    />
   </div>
 </template>
 
@@ -61,22 +66,6 @@ export default {
 
     progress() {
       return 100 - (this.visible.length / this.items.length) * 100
-    },
-
-    isValid() {
-      const [first, second] = this.selected
-
-      if (first && second) {
-        if (this.isSiblings(first, second)) {
-          if (first.value === second.value) {
-            return true
-          } else if (first.value + second.value === 10) {
-            return true
-          }
-        }
-      }
-
-      return false
     }
   },
 
@@ -91,15 +80,17 @@ export default {
     },
 
     addNumbers(numbers) {
-      numbers.forEach(number => {
-        this.items.push({
+      this.items = [
+        ...this.items,
+        ...numbers.map((number, index) => ({
           value: Number(number),
-          index: this.items.length,
+          index: this.items.length + index,
 
           visible: true,
-          selected: false
-        })
-      })
+          selected: false,
+          highlight: false
+        }))
+      ]
     },
 
     select(item) {
@@ -109,7 +100,7 @@ export default {
 
       // Select callback (validate and remove)
       if (this.selected.length === 2) {
-        if (this.isValid) {
+        if (this.isValid(this.selected)) {
           this.removeSelected()
         } else {
           this.toggleSelected()
@@ -130,6 +121,20 @@ export default {
 
     toggleSelected() {
       this.selected.map(item => (item.selected = !item.selected))
+    },
+
+    isValid([first, second]) {
+      if (first && second) {
+        if (this.isSiblings(first, second)) {
+          if (first.value === second.value) {
+            return true
+          } else if (first.value + second.value === 10) {
+            return true
+          }
+        }
+      }
+
+      return false
     },
 
     isSiblings(first, second) {
@@ -184,8 +189,32 @@ export default {
       }
     },
 
+    getHints() {
+      return [].concat(
+        ...this.visible.map((first, i) => {
+          return this.visible
+            .filter((second, j) => j > i && this.isValid([first, second]))
+            .map(second => {
+              return [first.index, second.index]
+            })
+        })
+      )
+    },
+
     showHint() {
-      return 1
+      const hints = this.getHints()
+      if (hints.length > 0) {
+        const [i, j] = hints[Math.floor(Math.random() * hints.length)] // Random hint - indexes to highlight
+
+        this.items[i].highlight = true
+        this.items[j].highlight = true
+
+        setTimeout(() => {
+          this.items[i].highlight = false
+          this.items[j].highlight = false
+        }, 1000)
+      } else {
+      }
     }
   }
 }

@@ -9,7 +9,7 @@ module.exports = {
           500: '#2f3244',
           700: '#252839',
           900: '#141824',
-          default: '1bb3d8'
+          default: '#1bb3d8'
         },
 
         green: {
@@ -26,6 +26,14 @@ module.exports = {
         salmon: {
           default: '#ff6955',
           500: '#ff5f4a'
+        },
+
+        progress: {
+          0: '#fb4b4b',
+          20: '#ffa879',
+          40: '#ffc163',
+          60: '#feff5c',
+          80: '#c0ff33'
         }
       },
 
@@ -41,6 +49,10 @@ module.exports = {
 
       spacing: {
         'sm': '4px'
+      },
+
+      fontSize: {
+        '2xs': '.5rem'
       }
     }
   },

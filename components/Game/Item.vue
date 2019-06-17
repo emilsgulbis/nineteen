@@ -5,7 +5,8 @@
       :class="{
         'bg-white text-blue-700': item.selected,
         'bg-blue-900 hover:bg-blue-700': !item.selected && item.visible,
-        'bg-blue-500 text-blue-300': !item.visible
+        'bg-blue-500 text-blue-300': !item.visible,
+        highlight: item.highlight
       }"
       @click.prevent="$emit('select')"
     >
