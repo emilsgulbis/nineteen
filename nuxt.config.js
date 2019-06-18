@@ -51,6 +51,15 @@ export default {
         storageBucket: "nineteen-19191.appspot.com",
         messagingSenderId: "168238774500",
         appId: "1:168238774500:web:24851221658e8c3c"
+      },
+      production: {
+        apiKey: "AIzaSyBbMpTZysW9v7FZq3j32NkRugfP4va7Ngk",
+        authDomain: "nineteen-19191.firebaseapp.com",
+        databaseURL: "https://nineteen-19191.firebaseio.com",
+        projectId: "nineteen-19191",
+        storageBucket: "nineteen-19191.appspot.com",
+        messagingSenderId: "168238774500",
+        appId: "1:168238774500:web:24851221658e8c3c"
       }
     }
   },
