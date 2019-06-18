@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
     <div class="flex-shrink-0 flex-grow-0">
-      <avatar :user-id="player.key" />
+      <avatar :user="player" />
     </div>
     <div class="flex-1 flex items-center">
       <div class="px-3 flex-1">

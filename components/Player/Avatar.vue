@@ -1,5 +1,5 @@
 <template>
-  <img :src="adorableAPI" />
+  <img :src="adorableAPI" :alt="user.username" />
 </template>
 
 <script>
@@ -10,15 +10,15 @@ export default {
       default: 50
     },
 
-    userId: {
-      type: String,
-      default: 'default'
+    user: {
+      type: Object,
+      required: true
     }
   },
 
   computed: {
     adorableAPI() {
-      return `https://api.adorable.io/avatars/${this.size}/${this.userId}.png`
+      return `https://api.adorable.io/avatars/${this.size}/${this.user.key}.png`
     }
   }
 }

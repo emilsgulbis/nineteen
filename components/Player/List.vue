@@ -4,7 +4,8 @@
       key="fake"
       :player="{
         username: 'John Doe',
-        progress: fakeProgress
+        progress: fakeProgress,
+        key: 'fake'
       }"
       class="player-item mb-2"
     />
