@@ -1,0 +1,25 @@
+.players {
+  &-enter-active, 
+  &-leave-active {
+    transition: all .5s;
+  }
+
+  &-enter, 
+  &-leave-to {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.zoom {
+  &-enter-active, 
+  &-leave-active {
+    transition: all .5s;
+  }
+
+  &-enter, 
+  &-leave-to {
+    opacity: 0;
+    transform: scale(1.1)
+  }
+}

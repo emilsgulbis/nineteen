@@ -4,14 +4,18 @@
     <div class="flex-1 p-6">
       <nuxt />
     </div>
+
+    <login />
   </div>
 </template>
 
 <script>
 import Sidebar from '~/components/Sidebar'
+import Login from '~/components/Login'
 export default {
   components: {
-    Sidebar
+    Sidebar,
+    Login
   }
 }
 </script>

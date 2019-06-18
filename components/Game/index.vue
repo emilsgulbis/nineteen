@@ -26,8 +26,6 @@
       </div>
     </div>
 
-    <pre>{{ games }}</pre>
-
     <game-menu
       :hints="0"
       @back="stepBack"
@@ -53,8 +51,7 @@ export default {
   data() {
     return {
       items: [],
-      history: [],
-      games: []
+      history: []
     }
   },
 
@@ -72,31 +69,16 @@ export default {
     }
   },
 
+  watch: {
+    progress: {
+      handler(progress) {
+        this.$store.dispatch('user/progress', progress)
+      }
+    }
+  },
+
   created() {
     this.resetNumbers()
-
-    const games = this.$fireDb.ref().child('games')
-    games.on('value', snap => {
-      this.games = snap.val()
-    })
-
-    this.$fireAuth.signInAnonymously()
-
-    this.$fireAuth.onAuthStateChanged(function(user) {
-      if (user) {
-        // User is signed in.
-        const isAnonymous = user.isAnonymous
-        const uid = user.uid
-
-        // eslint-disable-next-line
-        console.log(isAnonymous, uid)
-        // ...
-      } else {
-        // User is signed out.
-        // ...
-      }
-      // ...
-    })
   },
 
   methods: {
