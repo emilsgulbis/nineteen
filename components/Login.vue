@@ -1,10 +1,10 @@
 <template>
   <transition name="zoom">
-    <div v-if="visible" class="fixed inset-0 flex items-center justify-center">
+    <div v-if="loggedIn" class="fixed inset-0 flex items-center justify-center">
       <div class="fixed inset-0 bg-blue-900 opacity-75 z-0"></div>
       <form
         class="zoom-in rounded bg-blue-500 px-6 pt-8 pb-6 mx-auto shadow-xl w-320px relative z-10"
-        @submit.prevent.stop="signIn"
+        @submit.prevent.stop="setUsername"
       >
         <fieldset class="block mb-3">
           <label
@@ -38,8 +38,7 @@
 export default {
   data() {
     return {
-      username: '',
-      visible: false
+      username: ''
     }
   },
 
@@ -50,19 +49,12 @@ export default {
   },
 
   mounted() {
-    const username = localStorage.getItem('username')
-    if (username) {
-      this.$store.dispatch('user/signIn', username)
-    } else {
-      this.visible = true
-    }
+    this.$store.dispatch('user/signIn')
   },
 
   methods: {
-    signIn() {
-      this.$store.dispatch('user/signIn', this.username)
-      localStorage.setItem('username', this.username)
-      this.visible = false
+    setUsername() {
+      this.$store.dispatch('user/setUsername', this.username)
     }
   }
 }

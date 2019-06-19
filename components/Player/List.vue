@@ -21,7 +21,6 @@
 
 <script>
 import Player from '~/components/Player'
-import { setInterval } from 'timers'
 
 export default {
   components: {
@@ -42,14 +41,14 @@ export default {
   },
 
   mounted() {
-    setInterval(() => {
-      this.fakeProgress += Math.floor(Math.random() * Math.floor(30)) - 15
-      if (this.fakeProgress < 0) {
-        this.fakeProgress = 5
-      } else if (this.fakeProgress > 95) {
-        this.fakeProgress = 90
-      }
-    }, 1500)
+    // setInterval(() => {
+    //   this.fakeProgress += Math.floor(Math.random() * Math.floor(30)) - 15
+    //   if (this.fakeProgress < 0) {
+    //     this.fakeProgress = 5
+    //   } else if (this.fakeProgress > 95) {
+    //     this.fakeProgress = 90
+    //   }
+    // }, 1500)
 
     const players = this.$fireDb.ref().child('players')
     players.on('child_added', snap => {

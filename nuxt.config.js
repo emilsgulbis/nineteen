@@ -7,7 +7,7 @@ const {
 } = env.parsed || process.env
 
 export default {
-  mode: 'universal',
+  mode: 'spa',
   /*
    ** Headers of the page
    */

@@ -4,22 +4,35 @@ export const state = () => ({
 })
 
 export const mutations = {
-  updateUser(state, { id, username }) {
-    state.id = id
+  SET_USERNAME(state, username) {
     state.username = username
+  },
+
+  SET_ID(state, id) {
+    state.id = id
   }
 }
 
 export const actions = {
-  async signIn({ commit, dispatch }, username) {
+  fetchUser({ commit }, uid) {
+    this.$fireDb
+      .ref(`players`)
+      .child(uid)
+      .once('value', snap => {
+        const username = snap.val() && snap.val().username
+
+        if (username) {
+          commit('SET_USERNAME', username)
+        }
+      })
+  },
+
+  async signIn({ commit, dispatch }) {
     try {
       const auth = await this.$fireAuth.signInAnonymously()
-      commit('updateUser', {
-        id: auth.user.uid,
-        username
-      })
+      commit('SET_ID', auth.user.uid)
 
-      dispatch('store', { username, progress: 0 })
+      dispatch('fetchUser', auth.user.uid)
 
       const player = this.$fireDb.ref(`players/${auth.user.uid}`)
       player.onDisconnect().remove()
@@ -28,31 +41,18 @@ export const actions = {
     }
   },
 
-  async store({ state }, { username, progress }) {
-    if (state.id) {
-      try {
+  async setUsername({ state, commit }, username) {
+    try {
+      if (state.id) {
         await this.$fireDb.ref(`players`).update({
           [state.id]: {
-            username,
-            progress
+            username
           }
         })
-      } catch (e) {
-        alert(e)
+        commit('SET_USERNAME', username)
       }
-    }
-  },
-
-  async progress({ state }, progress) {
-    if (state.id) {
-      try {
-        await this.$fireDb
-          .ref(`players/${[state.id]}`)
-          .child('progress')
-          .set(progress)
-      } catch (e) {
-        alert(e)
-      }
+    } catch (e) {
+      alert(e)
     }
   }
 }
