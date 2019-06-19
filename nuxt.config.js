@@ -4,7 +4,7 @@ const {
   FIREBASE_APP_ID,
   FIREBASE_MESSAGING_SENDER_ID,
   FIREBASE_PROJECT_ID
-} = env.parsed
+} = env.parsed || process.env
 
 export default {
   mode: 'universal',
