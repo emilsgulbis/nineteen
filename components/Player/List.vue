@@ -55,7 +55,7 @@ export default {
       this.players.push({
         key: snap.key,
         username: snap.child('username').val(),
-        progress: snap.child('progress').val()
+        progress: snap.child('progress').val() || 0
       })
     })
 
@@ -63,7 +63,7 @@ export default {
       this.players = this.players.map(player => ({
         ...player,
         ...(snap.key === player.key && {
-          progress: snap.child('progress').val()
+          progress: snap.child('progress').val() || 0
         })
       }))
     })

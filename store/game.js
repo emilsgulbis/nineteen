@@ -150,12 +150,24 @@ export const actions = {
     }
   },
 
-  addHistory({ commit }, obj) {
-    commit('HISTORY_ADD', obj)
+  async addHistory({ commit, dispatch }, obj) {
+    await commit('HISTORY_ADD', obj)
+    dispatch('syncGame')
   },
 
-  backHistory({ commit }) {
-    commit('HISTORY_BACK')
+  async backHistory({ commit, dispatch }) {
+    await commit('HISTORY_BACK')
+    dispatch('syncGame')
+  },
+
+  async syncGame({ getters, state, rootState }) {
+    await this.$fireDb
+      .ref(`players`)
+      .child(rootState.user.id)
+      .update({
+        history: state.history,
+        progress: getters.progress
+      })
   }
 }
 
