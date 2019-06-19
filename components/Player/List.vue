@@ -41,21 +41,27 @@ export default {
   },
 
   mounted() {
-    // setInterval(() => {
-    //   this.fakeProgress += Math.floor(Math.random() * Math.floor(30)) - 15
-    //   if (this.fakeProgress < 0) {
-    //     this.fakeProgress = 5
-    //   } else if (this.fakeProgress > 95) {
-    //     this.fakeProgress = 90
-    //   }
-    // }, 1500)
+    setInterval(() => {
+      this.fakeProgress += Math.floor(Math.random() * Math.floor(30)) - 15
+      if (this.fakeProgress < 0) {
+        this.fakeProgress = 5
+      } else if (this.fakeProgress > 95) {
+        this.fakeProgress = 90
+      }
+    }, 1500)
 
-    const players = this.$fireDb.ref().child('players')
+    const players = this.$fireDb
+      .ref()
+      .child('players')
+      .orderByChild('online')
+      .equalTo(true)
+
     players.on('child_added', snap => {
       this.players.push({
         key: snap.key,
         username: snap.child('username').val(),
-        progress: snap.child('progress').val() || 0
+        progress: snap.child('progress').val() || 0,
+        online: snap.child('online').val() || false
       })
     })
 
@@ -63,7 +69,8 @@ export default {
       this.players = this.players.map(player => ({
         ...player,
         ...(snap.key === player.key && {
-          progress: snap.child('progress').val() || 0
+          progress: snap.child('progress').val() || 0,
+          online: snap.child('online').val() || false
         })
       }))
     })

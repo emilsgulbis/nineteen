@@ -14,7 +14,7 @@ export const mutations = {
 }
 
 export const actions = {
-  fetchUser({ commit }, uid) {
+  fetchUser({ dispatch }, uid) {
     this.$fireDb
       .ref(`players`)
       .child(uid)
@@ -22,7 +22,7 @@ export const actions = {
         const username = snap.val() && snap.val().username
 
         if (username) {
-          commit('SET_USERNAME', username)
+          dispatch('setUsername', username)
         }
       })
   },
@@ -35,7 +35,9 @@ export const actions = {
       dispatch('fetchUser', auth.user.uid)
 
       const player = this.$fireDb.ref(`players/${auth.user.uid}`)
-      player.onDisconnect().remove()
+      player.onDisconnect().update({
+        online: false
+      })
     } catch (e) {
       alert(e)
     }
@@ -46,6 +48,7 @@ export const actions = {
       if (state.id) {
         await this.$fireDb.ref(`players`).update({
           [state.id]: {
+            online: true,
             username
           }
         })
