@@ -1,3 +1,10 @@
+const {
+  FIREBASE_API_KEY,
+  FIREBASE_APP_ID,
+  FIREBASE_MESSAGING_SENDER_ID,
+  FIREBASE_PROJECT_ID
+} = process.env
+
 export default {
   mode: 'universal',
   /*
@@ -44,22 +51,22 @@ export default {
     useOnly: ['realtimeDb', 'auth'],
     config: {
       development: {
-        apiKey: "AIzaSyBbMpTZysW9v7FZq3j32NkRugfP4va7Ngk",
-        authDomain: "nineteen-19191.firebaseapp.com",
-        databaseURL: "https://nineteen-19191.firebaseio.com",
-        projectId: "nineteen-19191",
-        storageBucket: "nineteen-19191.appspot.com",
-        messagingSenderId: "168238774500",
-        appId: "1:168238774500:web:24851221658e8c3c"
+        apiKey: FIREBASE_API_KEY,
+        authDomain: `${FIREBASE_PROJECT_ID}.firebaseapp.com"`,
+        databaseURL: `https://${FIREBASE_PROJECT_ID}.firebaseio.com`,
+        projectId: FIREBASE_PROJECT_ID,
+        storageBucket: `${FIREBASE_PROJECT_ID}.appspot.com`,
+        messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
+        appId: FIREBASE_APP_ID
       },
       production: {
-        apiKey: "AIzaSyBbMpTZysW9v7FZq3j32NkRugfP4va7Ngk",
-        authDomain: "nineteen-19191.firebaseapp.com",
-        databaseURL: "https://nineteen-19191.firebaseio.com",
-        projectId: "nineteen-19191",
-        storageBucket: "nineteen-19191.appspot.com",
-        messagingSenderId: "168238774500",
-        appId: "1:168238774500:web:24851221658e8c3c"
+        apiKey: FIREBASE_API_KEY,
+        authDomain: `${FIREBASE_PROJECT_ID}.firebaseapp.com`,
+        databaseURL: `https://${FIREBASE_PROJECT_ID}.firebaseio.com`,
+        projectId: FIREBASE_PROJECT_ID,
+        storageBucket: `${FIREBASE_PROJECT_ID}.appspot.com`,
+        messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
+        appId: FIREBASE_APP_ID
       }
     }
   },
