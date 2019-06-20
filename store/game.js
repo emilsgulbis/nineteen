@@ -1,7 +1,7 @@
 import { patterns } from '~/utils/variables'
 
 export const state = () => ({
-  items: [],
+  items: getDefaultItems(),
   history: []
 })
 
@@ -15,7 +15,7 @@ export const mutations = {
   },
 
   CLEAR(state) {
-    state.items = []
+    state.items = getDefaultItems()
   },
 
   ADD(state, arr) {
@@ -102,7 +102,6 @@ export const actions = {
 
   async reset({ commit, dispatch }) {
     await commit('CLEAR')
-    await commit('ADD', patterns.default.split(','))
     await commit('SET_HISTORY', [])
     dispatch('syncGame')
   },
@@ -241,4 +240,16 @@ export const getters = {
 
     return index
   }
+}
+
+const getDefaultItems = function() {
+  const numbers = patterns.default.split(',')
+  return numbers.map((number, index) => ({
+    value: Number(number),
+    index,
+
+    visible: true,
+    selected: false,
+    highlight: false
+  }))
 }

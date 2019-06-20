@@ -1,22 +1,24 @@
 <template>
-  <transition-group name="players" tag="div">
-    <player
-      key="fake"
-      :player="{
-        username: 'John Doe',
-        progress: fakeProgress,
-        key: 'fake'
-      }"
-      class="player-item mb-2"
-    />
+  <div>
+    <transition-group name="players" tag="div">
+      <player
+        key="fake"
+        :player="{
+          username: 'John Doe',
+          progress: fakeProgress,
+          key: 'fake'
+        }"
+        class="player-item mb-2"
+      />
 
-    <player
-      v-for="player in players"
-      :key="player.key"
-      class="player-item mb-2"
-      :player="player"
-    />
-  </transition-group>
+      <player
+        v-for="player in players"
+        :key="player.key"
+        class="player-item mb-2"
+        :player="player"
+      />
+    </transition-group>
+  </div>
 </template>
 
 <script>

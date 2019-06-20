@@ -55,6 +55,11 @@ module.exports = {
 
       fontSize: {
         '2xs': '.5rem'
+      },
+
+      screens: {
+        'sm-min': {'min': '640px'},
+        'sm': {'max': '639px'},
       }
     }
   },

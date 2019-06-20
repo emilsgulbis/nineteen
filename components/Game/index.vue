@@ -1,9 +1,12 @@
 <template>
   <div class="flex flex-1">
     <div class="flex-1">
-      <div class="w-450px mx-auto">
+      <div class="w-450px mx-auto sm:pb-10">
         <div class="p-sm">
-          <game-progress :value="progress" />
+          <game-progress
+            :value="progress"
+            class="z-10 sm:fixed sm:top-0 sm:left-0 sm:h-2"
+          />
         </div>
 
         <div class="flex flex-wrap">
@@ -20,30 +23,21 @@
             class="bg-blue-300 text-blue-700 font-bold px-4 py-2 w-full rounded-full focus:outline-none uppercase"
             @click.prevent="duplicate()"
           >
-            Pievienot
+            Duplicate remaining
           </button>
         </div>
       </div>
     </div>
-
-    <game-menu
-      :hints="0"
-      @back="stepBack"
-      @hint="showHint"
-      @new="$store.dispatch('game/reset')"
-    />
   </div>
 </template>
 
 <script>
 import GameItem from './Item'
-import GameMenu from './Menu'
 import GameProgress from './Progress'
 
 export default {
   components: {
     GameItem,
-    GameMenu,
     GameProgress
   },
 
@@ -52,28 +46,9 @@ export default {
       return this.$store.state.game.items
     },
 
-    visible() {
-      return this.$store.getters.visible
-    },
-
     progress() {
-      return this.$store.getters.progress
+      return this.$store.getters['game/progress']
     }
-  },
-
-  watch: {
-    progress: {
-      handler(progress) {
-        // this.$store.dispatch('game/update', {
-        //   progress,
-        //   history: this.history
-        // })
-      }
-    }
-  },
-
-  created() {
-    this.$store.dispatch('game/reset')
   },
 
   methods: {
@@ -83,14 +58,6 @@ export default {
 
     duplicate() {
       this.$store.dispatch('game/duplicate')
-    },
-
-    stepBack() {
-      this.$store.dispatch('game/backHistory')
-    },
-
-    showHint() {
-      this.$store.dispatch('game/showHint')
     }
   }
 }
