@@ -14,17 +14,12 @@ export const mutations = {
 }
 
 export const actions = {
-  fetchUser({ dispatch }, uid) {
-    this.$fireDb
+  async fetchPlayer({ dispatch, commit }, uid) {
+    const snap = await this.$fireDb
       .ref(`players`)
       .child(uid)
-      .once('value', snap => {
-        const username = snap.val() && snap.val().username
-
-        if (username) {
-          dispatch('setUsername', username)
-        }
-      })
+      .once('value')
+    return snap.val()
   },
 
   async signIn({ commit, dispatch }) {
@@ -32,7 +27,15 @@ export const actions = {
       const auth = await this.$fireAuth.signInAnonymously()
       commit('SET_ID', auth.user.uid)
 
-      dispatch('fetchUser', auth.user.uid)
+      const user = await dispatch('fetchPlayer', auth.user.uid)
+      if (user && user.username) {
+        commit('SET_USERNAME', user.username)
+        dispatch('update')
+
+        if (user.history) {
+          dispatch('game/buildFromHistory', user.history, { root: true })
+        }
+      }
 
       const player = this.$fireDb.ref(`players/${auth.user.uid}`)
       player.onDisconnect().update({
@@ -43,16 +46,20 @@ export const actions = {
     }
   },
 
-  async setUsername({ state, commit }, username) {
+  async update({ state, commit }, obj = {}) {
     try {
       if (state.id) {
-        await this.$fireDb.ref(`players`).update({
-          [state.id]: {
-            online: true,
-            username
-          }
-        })
-        commit('SET_USERNAME', username)
+        await this.$fireDb
+          .ref(`players`)
+          .child(state.id)
+          .update({
+            ...obj,
+            online: true
+          })
+
+        if (obj.hasOwnProperty('username')) {
+          commit('SET_USERNAME', obj.username)
+        }
       }
     } catch (e) {
       alert(e)

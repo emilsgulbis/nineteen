@@ -15,7 +15,7 @@ export const mutations = {
   },
 
   CLEAR(state) {
-    this.items = []
+    state.items = []
   },
 
   ADD(state, arr) {
@@ -87,13 +87,24 @@ export const mutations = {
 }
 
 export const actions = {
-  buildFromHistory({ state, commit }) {
-    commit('SET_ITEMS')
+  buildFromHistory({ state, commit, getters }, history) {
+    commit('SET_HISTORY', history)
+
+    history.forEach(({ type, index }) => {
+      if (type === 'hide') {
+        index.map(i => commit('HIDE', { index: i }))
+      } else if (type === 'duplicate') {
+        const numbers = getters.visible.map(({ value }) => value)
+        commit('ADD', numbers)
+      }
+    })
   },
 
-  reset({ commit }) {
-    commit('CLEAR')
-    commit('ADD', patterns.default.split(','))
+  async reset({ commit, dispatch }) {
+    await commit('CLEAR')
+    await commit('ADD', patterns.default.split(','))
+    await commit('SET_HISTORY', [])
+    dispatch('syncGame')
   },
 
   toggle({ commit, dispatch, getters }, item) {
@@ -160,14 +171,15 @@ export const actions = {
     dispatch('syncGame')
   },
 
-  async syncGame({ getters, state, rootState }) {
-    await this.$fireDb
-      .ref(`players`)
-      .child(rootState.user.id)
-      .update({
+  async syncGame({ state, dispatch, getters }) {
+    await dispatch(
+      'user/update',
+      {
         history: state.history,
         progress: getters.progress
-      })
+      },
+      { root: true }
+    )
   }
 }
 

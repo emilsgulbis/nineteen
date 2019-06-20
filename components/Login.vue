@@ -54,7 +54,9 @@ export default {
 
   methods: {
     setUsername() {
-      this.$store.dispatch('user/setUsername', this.username)
+      this.$store.dispatch('user/update', {
+        username: this.username
+      })
     }
   }
 }
