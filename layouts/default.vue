@@ -1,6 +1,6 @@
 <template>
   <div class="flex min-h-screen">
-    <player-list class="bg-blue-700 w-320px p-6 sm:hidden" />
+    <player-list class="bg-darker w-320px p-6 sm:hidden" />
 
     <div class="flex-1 p-6">
       <nuxt />

@@ -20,7 +20,7 @@
 
         <div class="p-sm">
           <button
-            class="bg-blue-300 text-blue-700 font-bold px-4 py-2 w-full rounded-full focus:outline-none uppercase"
+            class="bg-light text-darker font-bold px-4 py-2 w-full rounded-full focus:outline-none uppercase"
             @click.prevent="duplicate()"
           >
             Duplicate remaining

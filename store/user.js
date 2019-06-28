@@ -1,4 +1,5 @@
 export const state = () => ({
+  loading: true,
   id: null,
   username: null
 })
@@ -10,6 +11,10 @@ export const mutations = {
 
   SET_ID(state, id) {
     state.id = id
+  },
+
+  UPDATE_LOADING(state, value) {
+    state.loading = value
   }
 }
 
@@ -29,13 +34,13 @@ export const actions = {
 
       const user = await dispatch('fetchPlayer', auth.user.uid)
       if (user && user.username) {
-        commit('SET_USERNAME', user.username)
-        dispatch('update')
+        dispatch('auth', user.username)
 
         if (user.history) {
           dispatch('game/buildFromHistory', user.history, { root: true })
         }
       }
+      commit('UPDATE_LOADING', false)
 
       const player = this.$fireDb.ref(`players/${auth.user.uid}`)
       player.onDisconnect().update({
@@ -46,23 +51,30 @@ export const actions = {
     }
   },
 
-  async update({ state, commit }, obj = {}) {
+  async update({ state }, obj = {}) {
     try {
       if (state.id) {
         await this.$fireDb
           .ref(`players`)
           .child(state.id)
-          .update({
-            ...obj,
-            online: true
-          })
-
-        if (obj.hasOwnProperty('username')) {
-          commit('SET_USERNAME', obj.username)
-        }
+          .update(obj)
       }
     } catch (e) {
       alert(e)
+    }
+  },
+
+  async auth({ state, commit }, username) {
+    if (state.id && username !== '') {
+      commit('SET_USERNAME', username)
+
+      await this.$fireDb
+        .ref(`players`)
+        .child(state.id)
+        .update({
+          username,
+          online: true
+        })
     }
   }
 }

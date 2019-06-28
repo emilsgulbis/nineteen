@@ -23,3 +23,22 @@
     transform: scale(1.1)
   }
 }
+
+.slide {
+  &-leave-active {
+    transition: all 1.5s cubic-bezier(0.7,0,0.3,1);
+
+    .slide-slower {
+      transition: all 1.5s cubic-bezier(0.7,0,0.3,1);
+    }
+  }
+
+  &-leave-to {
+    transform: translateY(-100%);
+
+    .slide-slower {
+      transform: translateY(40%) scale(.5);
+      opacity: 0;
+    }
+  }
+}
