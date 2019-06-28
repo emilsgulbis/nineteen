@@ -7,7 +7,12 @@
     </div>
 
     <login />
-    <app-menu />
+    <app-menu @new="$refs.confirm.show()" />
+    <confirm
+      ref="confirm"
+      text="This game will be deleted!"
+      @confirm="$store.dispatch('game/reset')"
+    />
   </div>
 </template>
 
@@ -15,12 +20,14 @@
 import PlayerList from '~/components/Player/List'
 import Login from '~/components/Login'
 import AppMenu from '~/components/Menu'
+import Confirm from '~/components/Confirm'
 
 export default {
   components: {
     PlayerList,
     Login,
-    AppMenu
+    AppMenu,
+    Confirm
   }
 }
 </script>

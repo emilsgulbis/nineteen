@@ -20,11 +20,9 @@
       </fieldset>
 
       <div class="text-center">
-        <button
-          class="text-xs font-bold uppercase px-6 py-2 bg-lime text-darkest rounded"
-        >
+        <app-button class="bg-lime text-darkest ">
           Let's go
-        </button>
+        </app-button>
       </div>
     </form>
   </modal>
@@ -33,11 +31,13 @@
 <script>
 import Modal from '~/components/Modal'
 import Loading from '~/components/Loading'
+import AppButton from '~/components/Button'
 
 export default {
   components: {
     Modal,
-    Loading
+    Loading,
+    AppButton
   },
 
   data() {

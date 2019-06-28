@@ -63,7 +63,7 @@ export default {
           label: 'New Game',
           icon: 'autorenew-icon',
           function: () => {
-            this.$store.dispatch('game/reset')
+            this.$emit('new')
           },
           class: 'bg-salmon'
         },
