@@ -15,7 +15,7 @@ export default {
     title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0' },
       {
         hid: 'description',
         name: 'description',
@@ -30,7 +30,7 @@ export default {
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: '#fff' },
+  loading: { color: '#27e8a7' },
   /*
    ** Global CSS
    */
@@ -42,7 +42,7 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: ['@nuxtjs/pwa', '@nuxtjs/eslint-module', 'nuxt-fire'],
+  modules: ['@nuxtjs/pwa', '@nuxtjs/eslint-module', 'nuxt-fire', 'nuxt-svg'],
 
   eslint: {
     fix: true
@@ -81,9 +81,5 @@ export default {
         tailwindcss: './tailwind.config.js'
       }
     },
-    /*
-     ** You can extend webpack config here
-     */
-    extend(config, ctx) {}
   }
 }
