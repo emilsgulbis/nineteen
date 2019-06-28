@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <transition-group name="players" tag="div">
+  <div class="flex flex-col">
+    <transition-group name="players" tag="div" class="p-6 flex-1">
       <player
         key="fake"
         :player="{
@@ -12,12 +12,16 @@
       />
 
       <player
-        v-for="player in players"
+        v-for="player in otherPlayers"
         :key="player.key"
         class="player-item mb-2"
         :player="player"
       />
     </transition-group>
+
+    <div v-if="userPlayer" class="p-6 bg-darkest">
+      <player :player="userPlayer" />
+    </div>
   </div>
 </template>
 
@@ -31,7 +35,7 @@ export default {
 
   data() {
     return {
-      players: [],
+      players: [], // TODO: store to access easily
       fakeProgress: 30
     }
   },
@@ -39,6 +43,14 @@ export default {
   computed: {
     userID() {
       return this.$store.state.user.id
+    },
+
+    otherPlayers() {
+      return this.players.filter(player => player.key !== this.userID)
+    },
+
+    userPlayer() {
+      return this.players.find(player => player.key === this.userID)
     }
   },
 

@@ -1,13 +1,13 @@
 <template>
   <div class="flex min-h-screen">
-    <player-list class="bg-darker w-320px p-6 sm:hidden" />
+    <player-list class="bg-darker w-320px sm:hidden" />
 
     <div class="flex-1 flex flex-col">
       <div class="flex-1">
         <nuxt class="p-6" />
       </div>
 
-      <app-footer class="p-6" />
+      <app-footer class="p-6 sm:hidden" />
     </div>
 
     <app-menu @new="$refs.confirm.show()" />
