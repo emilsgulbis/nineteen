@@ -3,7 +3,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        lighter: '#eceff7',
+        lightest: '#eceff7',
+        lighter: '#737894',
         light: '#4b4e60',
         dark: '#35384c',
         darker: '#252839',
@@ -13,6 +14,7 @@ module.exports = {
         blue: '#17BEBB',
         salmon: '#FB5012',
         orange: '#ffb444',
+        pink: '#df4577',
       },
 
       width: {

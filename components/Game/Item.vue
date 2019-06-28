@@ -1,7 +1,7 @@
 <template>
   <div class="w-50px h-50px p-sm relative">
     <button
-      class="w-full h-full text-lighter focus:outline-none rounded-full shadow font-bold"
+      class="w-full h-full text-lightest focus:outline-none rounded-full shadow font-bold"
       :class="{
         'bg-white text-darker': item.selected,
         'bg-darkest': !item.selected && item.visible,
